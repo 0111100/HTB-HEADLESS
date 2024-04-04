@@ -6,7 +6,7 @@
 sudo nmap -sCVT 10.10.11.8
 ```
 
-![[Pasted image 20240404160810.png]]
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/cc1af630-4f2d-477d-b696-6a4e17f1ece6)
 
 Podemos ver 2 puertos abiertos:
 - 22 (SSH)
@@ -14,18 +14,22 @@ Podemos ver 2 puertos abiertos:
 
 Vamos a probar si funciona la ip con el puerto 5000.
 
-![[Pasted image 20240404161047.png]]
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/850f9ad0-3187-4e0d-a5cc-1eabf2706e0f)
 
 
 Efectivamente funciona la web, una vez tenemos acceso a ella lo primero que vamos a hacer es realizar un fuzzing en busca de directorios:
 
-![[Pasted image 20240404162710.png]]
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/d4766bf4-277e-4c2b-a129-c646d98be7d6)
+
+
 ## Detección de vulnerabilidades
 
 
-![[Pasted image 20240404163854.png]]
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/241dc6dd-04dd-4d20-891a-94850e1c1e4e)
 
-![[Pasted image 20240404163806.png]]
+
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/33cdc751-0bcf-4ee8-b42f-ab14de7a8d6c)
+
 
 
 ``` javascript
@@ -33,7 +37,6 @@ Efectivamente funciona la web, una vez tenemos acceso a ella lo primero que vamo
 ```
 
 
-![[Pasted image 20240404163454.png]]
 
 Después de probar con algunos xss decido probar por otro lado a ver si funciona.
 
