@@ -57,8 +57,3 @@ Después de probar con algunos xss decido probar por otro lado a ver si funciona
 cookie: "ImFkbWluIg.dmzDkZNEm6CK0oyL1fbM-SnXpH0"
 
 ![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/9f4cb784-9d61-481b-928a-ddba6b524c6b)
-
-
-
-
-![[Pasted image 20240404184300.png]]
