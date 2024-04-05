@@ -40,7 +40,8 @@ Efectivamente funciona la web, una vez tenemos acceso a ella lo primero que vamo
 
 Después de probar con algunos xss decido probar por otro lado a ver si funciona.
 
-![[Pasted image 20240404164540.png]]
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/2f294528-ef0f-4640-9183-55b033e60dd9)
+
 
 ![[Pasted image 20240404183654.png]]
 
